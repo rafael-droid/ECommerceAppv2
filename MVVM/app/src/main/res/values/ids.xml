@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="edEmailLogin" type="id"/>
+    <item name="edFirstnameRegister" type="id"/>
+    <item name="edLastnameRegister" type="id"/>
+    <item name="edEmailRegister" type="id"/>
+    <item name="tvListProducts" type="id"/>
+    <item name="aaaa" type="id" />
+    <item name="bottomNavigationView" type="id" />
+    <item name="edCountry" type="id" />
+    <item name="tvCountry" type="id" />
+    <item name="tvRegion" type="id" />
+    <item name="tvCity" type="id" />
+
+</resources>
