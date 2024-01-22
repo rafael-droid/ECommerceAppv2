@@ -55,7 +55,7 @@ class LoginActivity: AppCompatActivity(){
             Log.d("password", password)
             val user = LoginRequest(email, password)
 
-            if (check == true) {
+
                 val call = RetrofitClient.apiService.loginUser(user)
                 call.enqueue(object : Callback<LoginResponse> {
                     override fun onResponse(
@@ -87,7 +87,7 @@ class LoginActivity: AppCompatActivity(){
                     }
 
                 })
-            }
+
         }
 }
 }

@@ -6,7 +6,11 @@
     android:id="@+id/homeFragment"
     xmlns:tools="http://schemas.android.com/tools">
 
-
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/blury_background"
+        android:scaleType="centerCrop"/>
 
     <ProgressBar
         android:id="@+id/progress"
@@ -26,7 +30,8 @@
         android:fontFamily="@font/poppins_thin"
         android:text="Products"
         android:textColor="@color/black"
-        android:textSize="22sp"
+        android:textSize="35sp"
+        android:paddingTop="35dp"
         app:layout_constraintBottom_toTopOf="@+id/rvProducts"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

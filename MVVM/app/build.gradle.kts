@@ -83,7 +83,8 @@ dependencies {
     implementation ("br.com.simplepass:loading-button-android:2.2.0")
 
     //scanner qr
-    implementation ("com.budiyev.android:code-scanner:2.1.0")
+    implementation ("com.journeyapps:zxing-android-embedded:4.3.0")
+    implementation("com.google.zxing:core:3.4.1")
 
     //Glide
     implementation ("com.github.bumptech.glide:glide:4.13.0")

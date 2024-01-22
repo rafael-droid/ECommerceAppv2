@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
+import pl.project.ecommerceapp.Api.Constants.BASE_URL
 import pl.project.ecommerceapp.Data.Item
 import pl.project.ecommerceapp.Fragment.Shopping.ProductDetailFragment
 import pl.project.ecommerceapp.R
@@ -35,7 +36,8 @@ class ProductsAdapter(private val products: List<Item>): RecyclerView.Adapter<Pr
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        Glide.with(thisContext).load(R.drawable.ic_cart).into(holder.img)
+        var imageUrl = BASE_URL + products[position].thumbnail.url
+        Glide.with(thisContext).load(imageUrl).into(holder.img)
         holder.name.text = products[position].name
         holder.price.text = products[position].price.toString()
 
