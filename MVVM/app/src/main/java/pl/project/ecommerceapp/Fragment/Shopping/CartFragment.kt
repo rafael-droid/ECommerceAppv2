@@ -1,60 +1,160 @@
 package pl.project.ecommerceapp.Fragment.Shopping
 
+
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import pl.project.ecommerceapp.Adapter.ProductsInCartAdapter
+import pl.project.ecommerceapp.Api.RetrofitClient
+import pl.project.ecommerceapp.Api.SessionManager
+import pl.project.ecommerceapp.Data.CartListResponse
+import pl.project.ecommerceapp.Data.CouponResponse
 import pl.project.ecommerceapp.R
+import pl.project.ecommerceapp.databinding.FragmentCartBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [CartFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CartFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var binding: FragmentCartBinding
+    private lateinit var sessionManager: SessionManager
+    private  var thiscontext: Context? = null;
+    private var coupon:String = ""
+    private var status: Boolean = false
+    private var discount: Double = 0.0
+    private var price: Double = 0.0
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    companion object {
+        private const val ARG_COUPON = "coupon"
+
+        fun newInstance(coupon: String): CartFragment {
+            val fragment = CartFragment()
+            val args = Bundle()
+            args.putString(ARG_COUPON, coupon)
+            fragment.arguments = args
+            return fragment
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cart, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding= FragmentCartBinding.inflate(inflater, container, false)
+        sessionManager = SessionManager(requireContext())
+        coupon = (arguments?.getString(ARG_COUPON, "") ?: "")
+        if (container != null) {
+            thiscontext = container.getContext()
+        }
+        return binding.getRoot()
     }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val call = RetrofitClient.apiService.getCart(token= "${sessionManager.fetchAuthToken()}")
+        Log.d("kod",coupon)
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CartFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CartFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        call.enqueue(object : Callback<CartListResponse> {
+            override fun onResponse(call: Call<CartListResponse>, response: Response<CartListResponse>) {
+                if (response.isSuccessful) {
+                    val productsResponse = response.body()
+                    if (productsResponse != null) {
+                        val adapter = ProductsInCartAdapter(productsResponse.items)
+                        binding.rvCart.layoutManager = LinearLayoutManager(thiscontext)
+                        binding.rvCart.adapter = adapter
+
+                        price = countPrice(productsResponse)
+
+                        Log.d("Price","first: $price")
+
+                        if (!coupon.isNullOrEmpty()) {
+                            val callCoupon = RetrofitClient.apiService.checkCoupon(
+                                token = "${sessionManager.fetchAuthToken()}",
+                                code = coupon
+                            )
+                            callCoupon.enqueue(object : Callback<CouponResponse> {
+                                override fun onResponse(
+                                    call: Call<CouponResponse>,
+                                    response: Response<CouponResponse>
+                                ) {
+                                    if (response.isSuccessful) {
+                                        val couponResponse = response.body()
+                                        if (couponResponse != null) {
+                                            if (couponResponse.isValid) {
+                                                discount = couponResponse.percentage.toDouble()
+                                                val previousPrice = price
+                                                price *= (1 - (discount / 100))
+
+                                                this@CartFragment.price = price
+                                                binding.tvDiscount.visibility = View.VISIBLE
+                                                binding.tvDiscount.text = "Discount: $discount %"
+                                                binding.tvTotalPrice.text = price.toString()
+
+                                                Log.d("Price","first: $price")
+                                                binding.tvTotalPrice2.visibility = View.VISIBLE
+                                                binding.tvTotalPrice2.text = previousPrice.toString()
+                                                binding.tvPreviousPrice.visibility = View.VISIBLE
+                                            }
+
+                                        }
+                                    }
+                                }
+
+                                override fun onFailure(call: Call<CouponResponse>, t: Throwable) {
+                                    Log.d("Error", t.message.toString())
+                                }
+                            })
+
+
+                        }
+
+
+
+
+                    }
+
                 }
             }
+
+            override fun onFailure(call: Call<CartListResponse>, t: Throwable) {
+                Log.d("Error", t.message.toString())
+            }
+        })
+
+
+
+        binding.imgScan.setOnClickListener{
+            status = true
+            val fragmentManager = activity?.supportFragmentManager?.beginTransaction()
+            if (fragmentManager != null) {
+                val fragment = ScanFragment()
+                fragmentManager.replace(R.id.container, fragment)
+                fragmentManager.addToBackStack(null)
+                fragmentManager.commit()
+
+            };
+        }
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+    }
+    private  fun countPrice(productsResponse: CartListResponse): Double {
+        for( i in productsResponse.items){
+            price += (i.quantity * i.product.price).toDouble()
+            Log.d("Price", price.toString())
+        }
+
+        binding.tvTotalPrice.text = (price).toString()
+        Log.d("Price", price.toString())
+        return price
+    }
+    fun checkCoupon(price: Double): Double {
+
+        return price
+    }
+
 }

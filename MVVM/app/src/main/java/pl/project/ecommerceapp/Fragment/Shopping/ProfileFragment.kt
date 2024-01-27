@@ -2,7 +2,6 @@ package pl.project.ecommerceapp.Fragment.Shopping
 
 
 import android.content.Context
-import pl.project.ecommerceapp.Data.Adrress
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import pl.project.ecommerceapp.Api.RetrofitClient
 import pl.project.ecommerceapp.Api.SessionManager
+import pl.project.ecommerceapp.Data.Address
 
 
 import pl.project.ecommerceapp.databinding.FragmentProfileBinding
@@ -33,25 +33,28 @@ class ProfileFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val call = RetrofitClient.apiService.getAddress(token = "Bearer ${sessionManager.fetchAuthToken()}")
+        val call = RetrofitClient.apiService.getAddress(token= "${sessionManager.fetchAuthToken()}")
 
-        call.enqueue(object : Callback<Adrress> {
-            override fun onResponse(call: Call<Adrress>, response: Response<Adrress>) {
+        call.enqueue(object : Callback<Address> {
+            override fun onResponse(call: Call<Address>, response: Response<Address>) {
                 if (response.isSuccessful) {
                     val addressResponse = response.body()
                     if (addressResponse != null) {
-                        binding.tvCountry.text = addressResponse.country
-                        binding.tvRegion.text = addressResponse.region
-                        binding.tvCity.text = addressResponse.city
-                        binding.tvZipCode.text = addressResponse.zipCode
-                        binding.tvStreetAddress.text = addressResponse.streetAddress
+                        binding.tvFirstName.text = addressResponse.items.first().user.firstName
+                        binding.tvLastName.text = addressResponse.items.first().user.lastName
+                        binding.tvEmail.text = addressResponse.items.first().user.email
+                        binding.tvCountry.text = addressResponse.items.first().country
+                        binding.tvRegion.text = addressResponse.items.first().region
+                        binding.tvCity.text = addressResponse.items.first().city
+                        binding.tvZipCode.text = addressResponse.items.first().zipCode
+                        binding.tvStreetAddress.text = addressResponse.items.first().streetAddress
 
                     }
 
                 }
             }
 
-            override fun onFailure(call: Call<Adrress>, t: Throwable) {
+            override fun onFailure(call: Call<Address>, t: Throwable) {
                 Log.d("Error", t.message.toString())
             }
         })

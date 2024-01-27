@@ -16,12 +16,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+
         <TextView
             android:id="@+id/tvAppName"
             style="@style/h3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="16dp"
             android:drawablePadding="6dp"
             android:text="ECommerceApp"
             android:textStyle="bold"
@@ -30,89 +32,125 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvLetsRegister"
+            android:id="@+id/tvUserProfile"
             style="@style/h4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:gravity="center"
-            android:text="Let's Register"
+            android:text="User Profile"
             android:textAlignment="center"
             android:textSize="35sp"
             app:layout_constraintEnd_toStartOf="@+id/guidelineRegisterRight"
             app:layout_constraintStart_toStartOf="@id/guidelineRegisterLeft"
             app:layout_constraintTop_toBottomOf="@id/tvAppName" />
 
+
         <TextView
-            android:id="@+id/tvDoHaveAccount"
-            style="@style/h2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:id="@id/tvFirstName"
             android:gravity="center"
-            android:text="Add new address"
-            android:textAlignment="center"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:textSize="25sp"
+            android:layout_marginTop="20dp"
+            android:hint="First Name"
+            android:textColor="@color/black"
             app:layout_constraintEnd_toStartOf="@+id/guidelineRegisterRight"
-            app:layout_constraintStart_toStartOf="@id/guidelineRegisterLeft"
-            app:layout_constraintTop_toBottomOf="@id/tvLetsRegister" />
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/guidelineRegisterLeft"
+            app:layout_constraintTop_toBottomOf="@+id/tvUserProfile" />
+
+        <TextView
+            android:id="@id/tvLastName"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:textSize="25sp"
+            android:layout_marginTop="20dp"
+            android:hint="Last Name"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineRegisterRight"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guidelineRegisterLeft"
+            app:layout_constraintTop_toBottomOf="@+id/tvFirstName" />
+
+        <TextView
+            android:id="@id/tvEmail"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:textSize="25sp"
+            android:layout_marginTop="20dp"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineRegisterRight"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guidelineRegisterLeft"
+            app:layout_constraintTop_toBottomOf="@+id/tvLastName" />
 
         <TextView
             android:id="@id/tvCountry"
             android:layout_width="0dp"
-            android:layout_height="@dimen/editTextHeight"
-            app:layout_constraintStart_toStartOf="@id/guidelineRegisterLeft"
-            app:layout_constraintEnd_toEndOf="@id/guidelineRegisterRight"
-            app:layout_constraintTop_toBottomOf="@id/tvDoHaveAccount"
-            style="@style/editText"
+            android:layout_height="50dp"
+            android:textSize="25sp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
             android:hint="Country"
-            android:inputType="textEmailAddress"
-            android:layout_marginTop="50dp"/>
+            app:layout_constraintEnd_toStartOf="@+id/guidelineRegisterRight"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guidelineRegisterLeft"
+            app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
 
         <TextView
             android:id="@id/tvRegion"
+            android:gravity="center"
             android:layout_width="0dp"
-            android:layout_height="@dimen/editTextHeight"
-            app:layout_constraintStart_toStartOf="@id/guidelineRegisterLeft"
-            app:layout_constraintEnd_toEndOf="@id/guidelineRegisterRight"
-            app:layout_constraintTop_toBottomOf="@id/tvCountry"
-            style="@style/editText"
+            android:layout_height="50dp"
+            android:textSize="25sp"
+            android:layout_marginTop="20dp"
             android:hint="Region"
-            android:layout_marginTop="20dp"/>
+            app:layout_constraintEnd_toStartOf="@+id/guidelineRegisterRight"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guidelineRegisterLeft"
+            app:layout_constraintTop_toBottomOf="@+id/tvCountry" />
 
         <TextView
             android:id="@id/tvCity"
+            android:gravity="center"
             android:layout_width="0dp"
-            android:layout_height="@dimen/editTextHeight"
-            app:layout_constraintStart_toStartOf="@id/guidelineRegisterLeft"
-            app:layout_constraintEnd_toEndOf="@id/guidelineRegisterRight"
-            app:layout_constraintTop_toBottomOf="@id/tvRegion"
-            style="@style/editText"
+            android:layout_height="50dp"
+            android:textSize="25sp"
+            android:layout_marginTop="20dp"
             android:hint="City"
-            android:layout_marginTop="20dp"/>
+            app:layout_constraintEnd_toStartOf="@+id/guidelineRegisterRight"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guidelineRegisterLeft"
+            app:layout_constraintTop_toBottomOf="@+id/tvRegion" />
 
         <TextView
             android:id="@+id/tvZipCode"
+            android:gravity="center"
             android:layout_width="0dp"
-            android:layout_height="@dimen/editTextHeight"
-            app:layout_constraintStart_toStartOf="@id/guidelineRegisterLeft"
-            app:layout_constraintEnd_toEndOf="@id/guidelineRegisterRight"
-            app:layout_constraintTop_toBottomOf="@id/tvCity"
-            style="@style/editText"
+            android:layout_height="50dp"
+            android:textSize="25sp"
+            android:layout_marginTop="20dp"
             android:hint="Zip Code"
-            android:layout_marginTop="20dp"/>
+            app:layout_constraintEnd_toStartOf="@+id/guidelineRegisterRight"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guidelineRegisterLeft"
+            app:layout_constraintTop_toBottomOf="@+id/tvCity" />
 
         <TextView
             android:id="@+id/tvStreetAddress"
+            android:gravity="center"
             android:layout_width="0dp"
-            android:layout_height="@dimen/editTextHeight"
-            app:layout_constraintStart_toStartOf="@id/guidelineRegisterLeft"
-            app:layout_constraintEnd_toEndOf="@id/guidelineRegisterRight"
-            app:layout_constraintTop_toBottomOf="@id/tvCity"
-            style="@style/editText"
+            android:layout_height="50dp"
+            android:textSize="25sp"
+            android:layout_marginTop="20dp"
             android:hint="Street Address"
-            android:layout_marginTop="20dp"/>
-
-
+            app:layout_constraintEnd_toStartOf="@+id/guidelineRegisterRight"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guidelineRegisterLeft"
+            app:layout_constraintTop_toBottomOf="@+id/tvZipCode" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guidelineRegisterLeft"
@@ -127,6 +165,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.91" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

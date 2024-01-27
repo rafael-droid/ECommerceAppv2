@@ -3,6 +3,7 @@ package pl.project.ecommerceapp.Fragment.Shopping
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.core.content.ContextCompat
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanIntentResult
 import com.journeyapps.barcodescanner.ScanOptions
+import pl.project.ecommerceapp.R
 import pl.project.ecommerceapp.databinding.FragmentScanBinding
 
 
@@ -38,6 +40,18 @@ class ScanFragment : Fragment() {
                 Toast.makeText(context,"Cancelled", Toast.LENGTH_SHORT).show()
             }else{
                 setResult(result.contents)
+
+                val fragmentManager = activity?.supportFragmentManager?.beginTransaction()
+                if (fragmentManager != null) {
+                    val fragment = CartFragment.newInstance(result.contents)
+                    Log.d("kod", result.contents)
+                    fragmentManager.replace(R.id.container, fragment)
+                    fragmentManager.addToBackStack(null)
+                    fragmentManager.commit()
+
+
+                };
+
             }
     }
     }

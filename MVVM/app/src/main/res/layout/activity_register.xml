@@ -146,7 +146,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Wrong Email"
+            android:text="Wrong Password"
             android:textAlignment="center"
             android:textColor="@color/g_red"
             android:visibility="invisible"
@@ -154,6 +154,36 @@
             app:layout_constraintEnd_toStartOf="@+id/guidelineRegisterRight"
             app:layout_constraintStart_toStartOf="@id/guidelineRegisterLeft"
             app:layout_constraintTop_toBottomOf="@id/edPasswordRegister"
+            app:layout_constraintBottom_toTopOf="@+id/edPasswordConfirmationRegister"/>
+
+        <EditText
+            android:id="@+id/edPasswordConfirmationRegister"
+            style="@style/editText"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/editTextHeight"
+            android:layout_marginTop="20dp"
+            android:hint="Password Confirmation"
+            android:inputType="textPassword"
+            app:layout_constraintEnd_toEndOf="@id/guidelineRegisterRight"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/guidelineRegisterLeft"
+            app:layout_constraintTop_toBottomOf="@id/edPasswordRegister" />
+
+        <TextView
+            android:id="@+id/tvErrorPasswordConfirmation"
+            style="@style/h4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Wrong second password"
+            android:textAlignment="center"
+            android:textColor="@color/g_red"
+            android:visibility="invisible"
+            android:textSize="10sp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/guidelineRegisterRight"
+            app:layout_constraintStart_toStartOf="@id/guidelineRegisterLeft"
+            app:layout_constraintTop_toBottomOf="@id/edPasswordConfirmationRegister"
             app:layout_constraintBottom_toTopOf="@+id/buttonRegisterRegister"/>
 
 
@@ -167,7 +197,7 @@
             android:text="Register"
             app:layout_constraintEnd_toStartOf="@+id/guidelineRegisterRight"
             app:layout_constraintStart_toStartOf="@+id/guidelineRegisterLeft"
-            app:layout_constraintTop_toBottomOf="@+id/edPasswordRegister" />
+            app:layout_constraintTop_toBottomOf="@+id/tvErrorPasswordConfirmation" />
 
         <TextView
             android:id="@+id/tvErrorRegister"

@@ -11,5 +11,9 @@
     <item name="tvCountry" type="id" />
     <item name="tvRegion" type="id" />
     <item name="tvCity" type="id" />
-
+    <item name="edAmount" type="id" />
+    <item name="tvFirstName" type="id" />
+    <item name="tvLastName" type="id" />
+    <item name="tvEmail" type="id" />
+    <item name="tvQuantity" type="id" />
 </resources>
